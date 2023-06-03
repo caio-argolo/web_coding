@@ -30,6 +30,7 @@ body {
   /* Shorthand */
   /* background: color image repeat position/size */
   background: var(--bg-url) no-repeat top center/cover;
+  height: 100vh;
 }
 body * {
   color: var(--text-color);
@@ -37,7 +38,8 @@ body * {
 }
 #container{
   /* height: 712px; */
-  width: 360px;
+  width: 100%;
+  max-width: 420px;
   /* so funciona auto para horizontal */
   margin: 56px auto 0px;
   padding: 0 24px;
@@ -81,12 +83,24 @@ body * {
   left: 0;
   transform: translateY(-50%);
   z-index: 1;
+  /* aqui não precisa de forwards pq o estado ja está definido em left 0; */
+  animation: slide-out 0.4s;
 }
 
+#switch button:hover {
+  outline: 8px solid var(--highlight-color);
+  transition: 0.4s;
+}
+/* Com animacao */
 .light #switch button{
+  /* forwards mantem as propriedades que foram alteradas na animation */
+  animation: slide-in 0.4s forwards;
+}
+/* Sem animacao */
+/* .light #switch button{
   right: 0;
   left: initial;
-}
+} */
 #switch span{
   display: block;
   width: 64px;
@@ -146,3 +160,35 @@ footer {
   text-align: center;
   font-size: 14px;
 }
+
+/* At-rule => so funciona quando tem a meta de viewport no html
+    media queries  */
+/* de 700 pra cima vai aplicar o seguinte */
+@media (min-width: 700px) {
+  :root{
+    --bg-url: url(./assets/bg-desktop.jpg);
+  }
+  .light{
+    --bg-url: url(./assets/bg-desktop-white.jpg);
+  }
+}
+
+/* At-rule de animation */
+@keyframes slide-in {
+  from{
+    left: 0
+  }
+  to{
+    left: 50%
+  }
+}
+
+@keyframes slide-out {
+  from{
+    left: 50%
+  }
+  to{
+    left: 0
+  }
+}
+
